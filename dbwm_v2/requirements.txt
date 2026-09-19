@@ -1,0 +1,27 @@
+# DB-WM v2 dependencies.
+#
+# The Gaussian-process / dynamics core is pure JAX for CPU+GPU acceleration.
+# Backbones (ResNet, DeiT) are implemented natively in Flax so gradients flow
+# end-to-end and there is NO PyTorch <-> JAX device juggling (avoids the library
+# conflicts that arise when running an eager PyTorch forward inside a jit'd JAX
+# step). PyTorch is therefore optional and only needed if you want to PORT
+# pretrained HuggingFace DeiT weights into the Flax model (see README).
+#
+# Pin to the versions verified in this repo to avoid API drift.
+
+jax==0.10.2
+jaxlib==0.10.2
+flax==0.12.7
+optax==0.2.8
+
+numpy>=2.0,<2.3
+scipy>=1.11
+rasterio>=1.3          # GeoTIFF I/O
+matplotlib>=3.7        # publication plots
+pandas>=2.0            # forcing / metrics tables
+scikit-image>=0.22     # SSIM metric
+tqdm>=4.66
+
+# Optional: only for porting pretrained DeiT weights from HuggingFace.
+# transformers>=4.40
+# torch>=2.2
